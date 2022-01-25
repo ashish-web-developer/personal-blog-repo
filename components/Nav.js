@@ -38,7 +38,7 @@ const Nav = ()=>{
                 <Stack direction = "row" spacing = {4}>
                 {
                     pages.map((page,i)=>(
-                        <Link href = "/">
+                        <Link key={i} href = "/">
                             <a className = {classes.NavLink}>{page}</a>
                         </Link>
                     ))

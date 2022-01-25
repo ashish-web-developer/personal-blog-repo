@@ -23,7 +23,8 @@ import {
     IconButton,
     Divider,
     Button,
-    useMediaQuery
+    useMediaQuery,
+    Avatar
 } from "@mui/material";
 import {
     makeStyles
@@ -39,7 +40,7 @@ const Profile = ()=>{
     });
 
     return (
-        <img src = {svg} width= "30px" height = "30px" alt = "avatar" />
+        <Avatar src = {svg} width= "30px" height = "30px" alt = "avatar" />
     )
 }
 
@@ -89,10 +90,6 @@ const Header = ()=>{
     },[mobileNavState])
     return(
         <>
-        <Head>
-            <link rel="preconnect" href="https://fonts.googleapis.com"/>
-            <link rel="preconnect" href="https://fonts.gstatic.com"/>
-            <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/> </Head>
         <AppBar
         className={classes.AppBar}
         position = "static"
@@ -111,7 +108,7 @@ const Header = ()=>{
                             </Grid>
                             {!isMobile?<Grid item xs = {3} display = "flex" alignItems = "center" justifyContent = "space-evenly">
                                 {pages.map((page,i)=>(
-                                    <Link href = "/">
+                                    <Link key={i} href = "/">
                                         <a className = {classes.AppBarNavLink}>{page}</a>
                                     </Link>
                                 ))}
