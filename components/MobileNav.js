@@ -22,7 +22,10 @@ import { makeStyles } from "@mui/styles";
 import { VscChromeClose } from "react-icons/vsc";
 import { BsFillCaretLeftFill } from "react-icons/bs";
 import { BiSearch, BiChevronDown } from "react-icons/bi";
+import {SiMicrodotblog}  from "react-icons/si";
 import { IoMdNotifications } from "react-icons/io";
+import {GiMineWagon} from "react-icons/gi";
+import {FaHandsHelping} from "react-icons/fa";
 
 const useStyles = makeStyles((theme) => ({
   AppBarTitle: {
@@ -43,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     marginTop: theme.spacing(1),
   },
+  listItem:{
+    fontFamily: "'Poppins', sans-serif",
+    fontWeight:"500"
+  }
 }));
 
 const blogs = [
@@ -254,23 +261,30 @@ const MobileNav = () => {
         <MenuList>
           <MenuItem>
             <ListItemIcon>
-              <IoMdNotifications />
+              <IoMdNotifications size = {25}/>
             </ListItemIcon>
-            <ListItemText>Notification</ListItemText>
+            <ListItemText className ={classes.listItem}>Notification</ListItemText>
           </MenuItem>
 
           <MenuItem>
             <ListItemIcon>
-              <IoMdNotifications />
+              <SiMicrodotblog size={25} />
             </ListItemIcon>
-            <ListItemText>Notification</ListItemText>
+            <ListItemText className = {classes.listItem}>Favourite List</ListItemText>
           </MenuItem>
 
           <MenuItem>
             <ListItemIcon>
-              <IoMdNotifications />
+              <GiMineWagon size = {25} />
             </ListItemIcon>
-            <ListItemText>Notification</ListItemText>
+            <ListItemText className ={classes.listItem}>Whats New?</ListItemText>
+          </MenuItem>
+
+          <MenuItem>
+            <ListItemIcon>
+              <FaHandsHelping size = {25} />
+            </ListItemIcon>
+            <ListItemText className = {classes.listItem}>Help</ListItemText>
           </MenuItem>
         </MenuList>
       </Container>
