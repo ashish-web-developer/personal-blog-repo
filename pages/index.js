@@ -4,8 +4,14 @@ import Head from "next/head";
 import { useState } from "react";
 import MobileNav from "../components/MobileNav";
 import MobileBottomNav from "../components/MobileBottomNav";
-import { useMediaQuery, useTheme, Box } from "@mui/material";
-export default function Home() {
+import { useMediaQuery, useTheme, Box ,Grid, Container} from "@mui/material";
+import PremiumBanner from "../components/PremiumBanner";
+import BlogTab from "../components/BlogsTabs";
+import SideBar from "../components/SideBar";
+
+
+
+export default function Home({data}) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
@@ -32,6 +38,36 @@ export default function Home() {
           <MobileBottomNav />
         </Box>
       ) : null}
+      <Box pt = {5} style ={{backgroundColor:"#f2f2f2",height:"100vh"}} >
+      <Container>
+        <Grid container spacing = {4}>
+          <Grid xs = {8} item>
+            <PremiumBanner data = {data}/>
+            <BlogTab/>
+          </Grid>
+          <Grid  xs = {4} item>
+            <SideBar/>
+          </Grid>
+        </Grid>
+      </Container>
+      </Box>
     </>
   );
 }
+
+
+export async function getServerSideProps(){
+  const res = await fetch("https://api.pexels.com/v1/search?query=nature",{
+    method:"get",
+    headers:new Headers({
+      'Authorization': process.env.NEXT_PUBLIC_PEXELS_API_KEY
+    })
+  })
+  const data = await res.json();
+  return {
+    props:{
+      data
+    }
+  }
+}
+
