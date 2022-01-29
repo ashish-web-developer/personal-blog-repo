@@ -40,9 +40,8 @@ const PremiumBanner = ({data})=>{
         modules={[Pagination, Navigation]}
         className="mySwiper"
         >
-            { data.photos.map((photo)=>{
-                    return(
-                        <SwiperSlide>
+            { data.photos.map((photo,i)=>{ return(
+                        <SwiperSlide key = {i}>
                             <div className = {classes.root}>
                                 <img width = "100%" height = "100%" src = {photo.src.landscape}/>
                             </div>
