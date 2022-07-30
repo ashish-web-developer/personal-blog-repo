@@ -6,6 +6,19 @@ import store from "../store";
 
 
 let theme = createTheme({
+  components:{
+    MuiTextField:{
+      styleOverrides:{
+        root:{
+          borderRadius:"8px",
+          overflow:"hidden",
+          "& .MuiFilledInput-input":{
+            padding:"16px 20px",
+          }
+        }
+      }
+    }
+  },
   typography: {
     fontFamily: "'Poppins', sans-serif",
   },

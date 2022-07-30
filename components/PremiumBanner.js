@@ -1,5 +1,4 @@
-import Image from "next/image";
-import {useRef} from "react";
+import {useEffect, useRef,useState} from "react";
 import {
     Box,
     Grid,
@@ -32,12 +31,20 @@ const useStyles = makeStyles((theme)=>({
     }
 }))
 
-const PremiumBanner = ({data})=>{
-    console.log("🚀 ~ file: PremiumBanner.js ~ line 36 ~ PremiumBanner ~ data", data)
+const PremiumBanner = ()=>{
     const theme = useTheme();
     const classes = useStyles();
     const swiperPrevRef = useRef(null);
     const swiperNextRef = useRef(null);
+    const [data,setData] = useState();
+    useEffect(()=>{
+        (async function(){
+            const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEXT_PUBLIC_BLOG_API_KEY}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            setData(data);
+        }())
+    })
     return (
         <>
         <Box width = "100%" position="relative">
@@ -60,9 +67,9 @@ const PremiumBanner = ({data})=>{
             modules={[Pagination, Navigation]}
             className="mySwiper"
             >
-                { data?.photos?.map((photo,i)=>{ return(
+                { data?.articles?.map(({urlToImage},i)=>{ return(
                             <SwiperSlide key = {i}>
-                                <img style = {{width:"100%",height:"300px",borderRadius:"10px"}} src = {photo.src.landscape}/>
+                                <img style = {{width:"100%",height:"300px",borderRadius:"10px"}} src = {urlToImage}/>
                             </SwiperSlide>
                         )
                     })
