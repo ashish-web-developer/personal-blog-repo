@@ -1,11 +1,13 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import {useState} from "@mui/material";
 import {
   Tabs,
   Tab,
   Typography,
   Box,
-  useTheme
+  useTheme,
+  Grid,
 } from "@mui/material";
 
 
@@ -18,10 +20,12 @@ const useStyles = makeStyles((theme)=>({
     textTransform:"Capitalize",
     fontFamily: "'Poppins', sans-serif",
     fontWeight:"700",
-    color:"#87959c",
+    color:theme.palette.secondary.main,
   },
   tabSelectedStyle:{
-    color: "#384555 !important",
+    color: `${theme.palette.secondary.dark} !important`,
+    fontFamily: "'Poppins', sans-serif",
+    fontWeight:"700",
   },
   indicator:{
     border:"1px solid #384555"
@@ -41,7 +45,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box py={3}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -62,7 +66,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function BasicTabs({data}) {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
   const classes = useStyles();
@@ -72,7 +76,7 @@ export default function BasicTabs() {
   };
 
   return (
-    <Box pt={2} sx={{ width: '100%' }}>
+    <Box pt={2} sx={{ width: '100%'}}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs 
           value={value} 
@@ -118,7 +122,15 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Japan
+        <Grid spacing = {3} container>
+          {
+            data?.photos?.map((photo,i)=>(
+              <Grid key = {i} item xs = {4}>
+                <img style = {{borderRadius:"10px"}} width="100%" height = "250px" src = {photo.src.portrait}/>
+              </Grid>
+            ))
+          }
+        </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Beauty
@@ -135,3 +147,4 @@ export default function BasicTabs() {
     </Box>
   );
 }
+

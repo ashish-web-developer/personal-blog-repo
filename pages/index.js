@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Head from "next/head";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import MobileNav from "../components/MobileNav";
 import MobileBottomNav from "../components/MobileBottomNav";
 import { useMediaQuery, useTheme, Box ,Grid, Container} from "@mui/material";
@@ -11,9 +11,26 @@ import SideBar from "../components/SideBar";
 
 
 
-export default function Home({data}) {
+export default function Home() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [data,setData] = useState();
+  useEffect(()=>{
+    (async function(){
+      const response = await fetch("https://api.pexels.com/v1/search?query=nature",{
+        method:"get",
+        headers:new Headers({
+          'Authorization': process.env.NEXT_PUBLIC_PEXELS_API_KEY
+        })
+      });
+      const data = await response.json();
+      setData(data);
+    }())
+  },[])
+
+
+
+
   return (
     <>
       <Head>
@@ -38,12 +55,14 @@ export default function Home({data}) {
           <MobileBottomNav />
         </Box>
       ) : null}
-      <Box pt = {5} style ={{backgroundColor:"#f2f2f2",height:"100vh"}} >
+      <Box pt = {5} style ={{backgroundColor:"#f2f2f2"}} >
       <Container>
         <Grid container spacing = {4}>
           <Grid xs = {8} item>
-            <PremiumBanner data = {data}/>
-            <BlogTab/>
+            <div>
+              <PremiumBanner data = {data}/>
+              <BlogTab data = {data}/>
+            </div>
           </Grid>
           <Grid  xs = {4} item>
             <SideBar/>
@@ -55,19 +74,4 @@ export default function Home({data}) {
   );
 }
 
-
-export async function getServerSideProps(){
-  const res = await fetch("https://api.pexels.com/v1/search?query=nature",{
-    method:"get",
-    headers:new Headers({
-      'Authorization': process.env.NEXT_PUBLIC_PEXELS_API_KEY
-    })
-  })
-  const data = await res.json();
-  return {
-    props:{
-      data
-    }
-  }
-}
 

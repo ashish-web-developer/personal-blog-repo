@@ -4,11 +4,11 @@ import Link from "next/link";
 
 const useStyles = makeStyles((theme) => ({
   Navbar: {
-    backgroundColor: "#f8f8f8",
+    backgroundColor: theme.palette.primary.dark,
     padding: theme.spacing(3, 0),
   },
   NavLink: (isMobile) => ({
-    color: "#384555",
+    color: theme.palette.secondary.dark,
     fontFamily: "'Poppins', sans-serif",
     fontWeight: "700",
     fontSize: isMobile ? "0.8rem" : "1rem",

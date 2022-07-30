@@ -39,21 +39,21 @@ const Profile = () => {
 
 const useStyles = makeStyles((theme) => ({
   AppBar: {
-    padding: theme.spacing(2, 0),
-    backgroundColor: "#fff",
+    padding: theme.spacing(1.2, 0),
+    backgroundColor: theme.palette.primary.light,
   },
   AppBarTitle: {
-    color: "#384555",
+    color:theme.palette.secondary.dark,
     fontFamily: "'Fredoka One', cursive",
     fontSize: "1.4rem",
   },
   AppBarNavLink: {
-    color: "#c8c8c8",
+    color: theme.palette.secondary.light,
     fontFamily: "'Poppins', sans-serif",
     fontWeight: "700",
   },
   profilebtn: {
-    color: "#384555",
+    color:theme.palette.secondary.dark,
     fontFamily: "'Poppins', sans-serif",
     fontWeight: "700",
     textTransform: "lowercase",
@@ -76,9 +76,6 @@ const Header = () => {
     });
   };
 
-  useEffect(() => {
-    console.log("mobile nav", mobileNavState);
-  }, [mobileNavState]);
   return (
     <>
       <AppBar className={classes.AppBar} position="static" elevation={0}>
@@ -118,20 +115,20 @@ const Header = () => {
               >
                 <Stack spacing={2} direction="row">
                   <IconButton>
-                    <BsMessenger color="#384555" />
+                    <BsMessenger color={theme.palette.secondary.dark} />
                   </IconButton>
                   <IconButton>
-                    <RiNotificationBadgeFill color="#384555" />
+                    <RiNotificationBadgeFill color={theme.palette.secondary.dark} />
                   </IconButton>
                   <IconButton>
-                    <AiFillHome color="#384555" />
+                    <AiFillHome color={theme.palette.secondary.dark}/>
                   </IconButton>
                 </Stack>
                 <Divider orientation="vertical" />
                 <Button
                   className={classes.profilebtn}
                   startIcon={<Profile />}
-                  endIcon={<MdArrowDropDownCircle color="#384555" />}
+                  endIcon={<MdArrowDropDownCircle color={theme.palette.secondary.dark} />}
                 >
                   beingsocasual
                 </Button>
