@@ -1,19 +1,22 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {useState} from "@mui/material";
+import Link from 'next/link'
 import {
   Tabs,
   Tab,
   Typography,
   Box,
   useTheme,
-  Grid,
+  Grid
 } from "@mui/material";
 
 
 import {
   makeStyles
 } from "@mui/styles";
+import BlogsCard from './BlogsCard';
 
 const useStyles = makeStyles((theme)=>({
   tabStyle:{
@@ -66,11 +69,32 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs({data}) {
+export default function BasicTabs({data,fetcher}) {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
   const classes = useStyles();
+  const tabPanelsArr = ["India","Beauty","Food","Lifestyle","Travel"];
 
+  useEffect(()=>{
+    switch(value){
+      case 0:
+        fetcher("japan")
+        break;
+      case 1:
+        fetcher("beauty")
+        break;
+      case 2:
+        fetcher("Food")
+        break;
+      case 3:
+        fetcher("Lifestyle")
+      case 4:
+        fetcher("Travel")
+
+
+    }
+    console.log("value of fetcher",value,data);
+  },[value])
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -90,7 +114,7 @@ export default function BasicTabs({data}) {
               root:classes.tabStyle,
               selected:classes.tabSelectedStyle
             }}
-            label="Japan" {...a11yProps(0)} />
+            label="India" {...a11yProps(0)} />
           <Tab 
             classes = {{
               root:classes.tabStyle,
@@ -121,19 +145,27 @@ export default function BasicTabs({data}) {
             {...a11yProps(4)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
+      {/*<TabPanel value={value} index={0}>
         <Grid spacing = {3} container>
           {
-            data?.photos?.map((photo,i)=>(
+            data?.articles?.map(({author,title,url, urlToImage},i)=>(
               <Grid key = {i} item xs = {4}>
-                <img style = {{borderRadius:"10px"}} width="100%" height = "250px" src = {photo.src.portrait}/>
+                <BlogsCard {...{author,title,url,urlToImage}} />
               </Grid>
             ))
           }
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Beauty
+        <Grid spacing = {3} container>
+          {
+            data?.articles?.map(({author,title,url, urlToImage},i)=>(
+              <Grid key = {i} item xs = {4}>
+                <BlogsCard {...{author,title,url,urlToImage}} />
+              </Grid>
+            ))
+          }
+        </Grid>
       </TabPanel>
       <TabPanel value={value} index={2}>
         Food
@@ -143,7 +175,24 @@ export default function BasicTabs({data}) {
       </TabPanel>
       <TabPanel value={value} index={4}>
         Travel
-      </TabPanel>
+        </TabPanel>*/}
+        {
+          tabPanelsArr.map((panels,index)=>{
+            return(
+              <TabPanel value={value} index={index}>
+                <Grid spacing = {3} container>
+                  {
+                    data?.articles?.map(({author,title,url, urlToImage},i)=>(
+                      <Grid key = {i} item xs = {4}>
+                        <BlogsCard {...{author,title,url,urlToImage}} />
+                      </Grid>
+                    ))
+                  }
+                </Grid>
+              </TabPanel>
+            )
+          })
+        }
     </Box>
   );
 }
