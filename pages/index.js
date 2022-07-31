@@ -14,31 +14,6 @@ import SideBar from "../components/SideBar";
 export default function Home() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [data,setData] = useState();
-
-  async function fetcher(query){
-    const url = `https://newsapi.org/v2/everything?q=${query}&from=2022-07-30&sortBy=popularity&apiKey=${process.env.NEXT_PUBLIC_BLOG_API_KEY}`;
-    const req = new Request(url);
-    console.log("value of url",url)
-    const response = await fetch(req);
-    const data = await response.json();
-    setData(data);
-    console.log(data,url);
-    return data;
-
-  }
-  useEffect(()=>{
-    (async function(){
-      await fetcher("japan");
-    }())
-  },[])
-  useEffect(()=>{
-    console.log("value of data",data);
-  },[data])
-
-
-
-
   return (
     <>
       <Head>
@@ -68,8 +43,8 @@ export default function Home() {
         <Grid container spacing = {4}>
           <Grid xs = {8} item>
             <div>
-              <PremiumBanner data = {data}/>
-              <BlogTab fetcher = {fetcher} data = {data}/>
+              <PremiumBanner/>
+              <BlogTab/>
             </div>
           </Grid>
           <Grid  xs = {4} item>
