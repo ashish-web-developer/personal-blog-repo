@@ -1,4 +1,4 @@
-import {useEffect, useRef,useState} from "react";
+import {useEffect, useRef,useState,memo} from "react";
 import {
     Box,
     Grid,
@@ -44,7 +44,7 @@ const PremiumBanner = ()=>{
             const data = await response.json();
             setData(data);
         }())
-    })
+    },[])
     return (
         <>
         <Box width = "100%" position="relative">

@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect ,useState} from 'react';
 import PropTypes from 'prop-types';
-import {useState} from "@mui/material";
 import Link from 'next/link'
 import {
   Tabs,
@@ -69,31 +68,45 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs({data,fetcher}) {
+export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
   const classes = useStyles();
   const tabPanelsArr = ["India","Beauty","Food","Lifestyle","Travel"];
+  const [data,setData] = useState();
+
+  async function fetcher(query){
+    const url = `https://newsapi.org/v2/everything?q=${query}&from=2022-07-30&sortBy=popularity&apiKey=${process.env.NEXT_PUBLIC_BLOG_API_KEY}`;
+    const req = new Request(url);
+    console.log("value of url",url)
+    const response = await fetch(req);
+    const data = await response.json();
+    setData(data);
+    console.log(data,url);
+    return data;
+
+  }
 
   useEffect(()=>{
-    switch(value){
-      case 0:
-        fetcher("japan")
-        break;
-      case 1:
-        fetcher("beauty")
-        break;
-      case 2:
-        fetcher("Food")
-        break;
-      case 3:
-        fetcher("Lifestyle")
-      case 4:
-        fetcher("Travel")
-
-
-    }
-    console.log("value of fetcher",value,data);
+    (async function(){
+      switch(value){
+        case 0:
+          await fetcher("japan")
+          break;
+        case 1:
+          await fetcher("beauty")
+          break;
+        case 2:
+          await fetcher("Food")
+          break;
+        case 3:
+          await fetcher("Lifestyle")
+          break;
+        case 4:
+          await fetcher("Travel")
+          break;
+      }
+    }())
   },[value])
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -179,7 +192,7 @@ export default function BasicTabs({data,fetcher}) {
         {
           tabPanelsArr.map((panels,index)=>{
             return(
-              <TabPanel value={value} index={index}>
+              <TabPanel key = {index} value={value} index={index}>
                 <Grid spacing = {3} container>
                   {
                     data?.articles?.map(({author,title,url, urlToImage},i)=>(
