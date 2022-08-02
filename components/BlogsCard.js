@@ -5,8 +5,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { Skeleton } from '@mui/material';
 
-export default function BlogsCard({auther,title,url,urlToImage}) {
+function BlogsCard({auther,title,url,urlToImage}) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -30,3 +31,5 @@ export default function BlogsCard({auther,title,url,urlToImage}) {
     </Card>
   );
 }
+
+export default React.memo(BlogsCard);

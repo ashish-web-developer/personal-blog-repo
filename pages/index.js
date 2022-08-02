@@ -1,7 +1,6 @@
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Head from "next/head";
-import { useState,useEffect } from "react";
 import MobileNav from "../components/MobileNav";
 import MobileBottomNav from "../components/MobileBottomNav";
 import { useMediaQuery, useTheme, Box ,Grid, Container} from "@mui/material";
@@ -47,9 +46,11 @@ export default function Home() {
               <BlogTab/>
             </div>
           </Grid>
+          {!isMobile &&
           <Grid  xs = {4} item>
             <SideBar/>
           </Grid>
+          }
         </Grid>
       </Container>
       </Box>

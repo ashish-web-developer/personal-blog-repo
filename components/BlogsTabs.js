@@ -82,7 +82,6 @@ export default function BasicTabs() {
     const response = await fetch(req);
     const data = await response.json();
     setData(data);
-    console.log(data,url);
     return data;
 
   }
@@ -196,7 +195,7 @@ export default function BasicTabs() {
                 <Grid spacing = {3} container>
                   {
                     data?.articles?.map(({author,title,url, urlToImage},i)=>(
-                      <Grid key = {i} item xs = {4}>
+                      <Grid key = {i} item xs = {{xs:1,md:4}}>
                         <BlogsCard {...{author,title,url,urlToImage}} />
                       </Grid>
                     ))
